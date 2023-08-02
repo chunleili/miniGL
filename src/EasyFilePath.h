@@ -1,18 +1,17 @@
 #pragma once
 #include <filesystem>
-namespace fs = std::filesystem;
 
 class EasyFilePath
 {
 public:
-    inline static fs::path exeDir;
-    inline static fs::path projectSourceDir;
-    inline static fs::path modelDir;
+    inline static std::filesystem::path exeDir;
+    inline static std::filesystem::path projectSourceDir;
+    inline static std::filesystem::path modelDir;
 
     static void processFilePath()
     {
         // get current directory as exeDir
-        fs::path currentDir = fs::current_path();
+        std::filesystem::path currentDir = std::filesystem::current_path();
         exeDir = currentDir ;
 
         // get parent directory as projectSourceDir

@@ -7,6 +7,7 @@
 #include "Common/Common.h"
 #include "Visualization/MiniGL.h"
 #include "EasyFilePath.h"
+#include "EasyPlyLoader.h"
 
 using namespace std;
 namespace fs = std::filesystem;
@@ -45,9 +46,8 @@ void shaderBegin(const float *col);
 void shaderEnd();
 void shaderFlatBegin(const float* col);
 void shaderFlatEnd();
-void loadPlyParticles();
 
-// main 
+
 int main( int argc, char **argv )
 {
 
@@ -68,33 +68,12 @@ int main( int argc, char **argv )
 		createSphereBuffers((Real)particleRadius, 8);
 
 	EasyFilePath::processFilePath();
-	loadPlyParticles();
+	const std::string fileName = "bunny_particles.ply";
+	EasyPlyLoader::loadPlyParticles(fileName, particlePos);
 
 	MiniGL::mainLoop();	
 
 	return 0;
-}
-
-
-
-void loadPlyParticles()
-{
-	// Construct a data object by reading from file
-    std::string fileName = "bunny_particles.ply";
-    fs::path filePath = EasyFilePath::modelDir / fileName;
-	auto fullPathString = filePath.string();
-
-	happly::PLYData plyIn(fullPathString);
-	std::vector<std::array<double, 3>> vPos = plyIn.getVertexPositions();
-	printf("Reading ply file: %s\n", fullPathString.c_str());
-	printf("Number of vertices: %d\n", int(vPos.size()));
-	// copy data to particlePos
-	particlePos.resize(vPos.size());
-	for (int i = 0; i < vPos.size(); i++)
-	{
-		particlePos[i] = Vector3r(vPos[i][0], vPos[i][1], vPos[i][2]);
-	}
-	printf("End Reading ply file\n");
 }
 
 

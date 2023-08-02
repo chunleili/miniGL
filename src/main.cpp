@@ -67,9 +67,10 @@ int main( int argc, char **argv )
 	if (context_major_version >= 3)
 		createSphereBuffers((Real)particleRadius, 8);
 
-	EasyFilePath::processFilePath();
-	const std::string fileName = "bunny_particles.ply";
-	EasyPlyLoader::loadPlyParticles(fileName, particlePos);
+	EasyFilePath::init();
+	
+	const std::string absFileName =  EasyFilePath::getModelFileAbsPath("bunny_particles.ply");
+	EasyPlyLoader::loadPlyParticles(absFileName, particlePos);
 
 	MiniGL::mainLoop();	
 

@@ -1013,8 +1013,8 @@ void MiniGL::mainLoop()
 
 	while (!glfwWindowShouldClose(m_glfw_window))
 	{
-		// if (idlefunc != nullptr)
-		// 	idlefunc();
+		if (idlefunc != nullptr)
+			idlefunc();
 
 		double currentTime = glfwGetTime();
 		if (currentTime - m_lastTime >= 1.0 / 60.0)  // render at maximum at 60 fps

@@ -1000,7 +1000,7 @@ void MiniGL::breakPoint()
 
 void MiniGL::error_callback(int error, const char* description)
 {
-	// LOG_ERR << description;
+	std::cerr<<"glfw Error!\n"<<"Error code:"<<error<<"\nMessage: "<<description<<std::endl;
 }
 
 

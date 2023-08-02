@@ -144,7 +144,7 @@ void timeStep ()
 void render ()
 {
 	// Draw simulation model
-	std::vector<Vector3r> particlePos = {{0,0,0},{0,0,1},{0,1,0},{1,0,0}};
+	std::vector<Vector3r> particlePos = {{0,0,0},{0,0,1},{0,1,0},{1,0,0},{0.5,0.5,0.5}};
 	const unsigned int nParticles = particlePos.size();
 
 	float surfaceColor[4] = { 0.2f, 0.6f, 0.8f, 1 };

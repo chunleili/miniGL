@@ -32,7 +32,7 @@ include_directories(${PROJECT_SOURCE_DIR}/extern/freeglut/include)
 include_directories(${PROJECT_SOURCE_DIR}/extern/glew/include)
 include_directories(${PROJECT_SOURCE_DIR}/src)
 
-target_link_libraries(main imgui glfw)
+target_link_libraries(main glfw)
 target_link_libraries(main OpenGL::GL)
 
 set(EXTERN_DIR ${PROJECT_SOURCE_DIR}/extern)
@@ -44,7 +44,7 @@ find_package(OpenGL REQUIRED) # windows SDK中有opengl的库
 # glfw
 add_subdirectory(extern/glfw)
 #imgui 
-add_subdirectory(extern/imgui)
+# add_subdirectory(extern/imgui)
 
 
 

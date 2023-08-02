@@ -24,6 +24,8 @@
 #include "math.h"
 #include <iostream>
 
+#include "ImguiEasyUse.h"
+
 
 float MiniGL::fovy = 45;
 float MiniGL::znear = 0.5f;
@@ -1007,6 +1009,8 @@ void MiniGL::error_callback(int error, const char* description)
 
 void MiniGL::mainLoop()
 {
+	ImguiEasyUse::init(m_glfw_window);
+
 	while (!glfwWindowShouldClose(m_glfw_window))
 	{
 		// if (idlefunc != nullptr)
@@ -1024,6 +1028,8 @@ void MiniGL::mainLoop()
 
 			if (scenefunc != nullptr)
 				scenefunc();
+			
+			ImguiEasyUse::render();
 
 			if (m_vsync)
 				glfwSwapBuffers(m_glfw_window);
@@ -1035,6 +1041,8 @@ void MiniGL::mainLoop()
 
 	if (destroyfunc != nullptr)
 		destroyfunc();
+
+	ImguiEasyUse::cleanup();
 
 	glfwDestroyWindow(m_glfw_window);
 

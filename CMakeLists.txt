@@ -32,6 +32,7 @@ add_executable(main
 	  ${PROJECT_SOURCE_DIR}/src/Visualization/MiniGL.cpp                       
 	  ${PROJECT_SOURCE_DIR}/src/Visualization/Shader.cpp
 	  ${PROJECT_SOURCE_DIR}/src/Visualization/ImGuiEasyUse.cpp
+	  ${PROJECT_SOURCE_DIR}/src/EasyFilePath.cpp
 )
 
 include_directories(${PROJECT_SOURCE_DIR}/src)

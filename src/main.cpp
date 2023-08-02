@@ -2,9 +2,11 @@
 #include <iostream>
 #include <filesystem>
 
+#include "happly/happly.h"
+
 #include "Common/Common.h"
 #include "Visualization/MiniGL.h"
-#include "happly/happly.h"
+#include "EasyFilePath.h"
 
 using namespace std;
 namespace fs = std::filesystem;
@@ -22,9 +24,6 @@ void releaseSphereBuffers();
 const Real particleRadius = static_cast<Real>(0.025);
 std::vector<Vector3r> particlePos;
 
-fs::path projectSourceDir;
-fs::path exeDir;
-fs::path modelDir;
 
 bool doPause = true;
 Vector3r oldMousePos;
@@ -46,7 +45,6 @@ void shaderBegin(const float *col);
 void shaderEnd();
 void shaderFlatBegin(const float* col);
 void shaderFlatEnd();
-void processFilePath();
 void loadPlyParticles();
 
 // main 
@@ -69,7 +67,7 @@ int main( int argc, char **argv )
 	if (context_major_version >= 3)
 		createSphereBuffers((Real)particleRadius, 8);
 
-	processFilePath();
+	EasyFilePath::processFilePath();
 	loadPlyParticles();
 
 	MiniGL::mainLoop();	
@@ -77,32 +75,13 @@ int main( int argc, char **argv )
 	return 0;
 }
 
-void processFilePath()
-{
-	// get current directory as exeDir
-    fs::path currentDir = fs::current_path();
-	exeDir = currentDir.string();
-
-	// get parent directory as projectSourceDir
-	currentDir = currentDir.parent_path();
-    projectSourceDir = currentDir.string();
-
-	// get models directory as modelsDir
-	currentDir /= "data";
-	currentDir /= "models";
-	modelDir = currentDir.string();
-
-    std::cout << "exeDir: " << exeDir << std::endl;
-    std::cout << "projectSourceDir: " << projectSourceDir << std::endl;
-    std::cout << "modelsDir: " << modelDir << std::endl;
-}
 
 
 void loadPlyParticles()
 {
 	// Construct a data object by reading from file
     std::string fileName = "bunny_particles.ply";
-    fs::path filePath = modelDir / fileName;
+    fs::path filePath = EasyFilePath::modelDir / fileName;
 	auto fullPathString = filePath.string();
 
 	happly::PLYData plyIn(fullPathString);

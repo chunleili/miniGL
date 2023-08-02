@@ -3,7 +3,6 @@
 #include <fstream>
 #include <sstream>
 
-using namespace PBD;
 
 Shader::Shader(void)
 {

@@ -19,8 +19,6 @@
 #include <vector>
 
 
-namespace PBD
-{
 	class Selection
 	{
 	public:
@@ -116,6 +114,5 @@ namespace PBD
 			}
 		}
 	};
-}
 
 #endif

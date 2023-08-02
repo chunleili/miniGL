@@ -5,7 +5,6 @@
 #include "Visualization/MiniGL.h"
 
 
-using namespace PBD;
 using namespace std;
 
 void timeStep ();
@@ -16,7 +15,6 @@ void selection(const Vector2i &start, const Vector2i &end, void *clientData);
 void createSphereBuffers(Real radius, int resolution);
 void renderSphere(const Vector3r &x, const float color[]);
 void releaseSphereBuffers();
-
 
 const Real particleRadius = static_cast<Real>(0.025);
 
@@ -40,7 +38,6 @@ void shaderBegin(const float *col);
 void shaderEnd();
 void shaderFlatBegin(const float* col);
 void shaderFlatEnd();
-
 
 
 // main 
@@ -169,6 +166,9 @@ void render ()
 	MiniGL::drawGrid_xz(gridColor);
 	
 	MiniGL::coordinateSystem();
+
+
+	// ImGui::ShowDemoWindow();
 
 }
 

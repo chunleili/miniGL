@@ -33,8 +33,6 @@
 struct GLFWwindow;
 typedef class GLUquadric GLUquadricObj;
 
-namespace PBD
-{
 	class MiniGL
 	{
 	#define IMAGE_ROWS 128
@@ -220,6 +218,5 @@ namespace PBD
 		static bool getWindowMaximized();
 		static void setWindowMaximized(const bool b);	
 	};
-}
 
 #endif

@@ -24,7 +24,6 @@
 #include "math.h"
 #include <iostream>
 
-using namespace PBD;
 
 float MiniGL::fovy = 45;
 float MiniGL::znear = 0.5f;
@@ -1001,6 +1000,10 @@ void MiniGL::error_callback(int error, const char* description)
 {
 	// LOG_ERR << description;
 }
+
+
+
+
 
 void MiniGL::mainLoop()
 {

@@ -5,8 +5,7 @@
 #include <string>
 #include <glad/gl.h>
 
-namespace PBD
-{
+
 	class Shader
 	{
 	public:
@@ -34,6 +33,5 @@ namespace PBD
 		std::map<std::string, GLuint> m_uniforms;
 		GLuint m_shaders[3];	
 	};
-}
 
 #endif

@@ -3,7 +3,7 @@
 
 #include "Common/Common.h"
 #include "Visualization/MiniGL.h"
-
+#include "happly/happly.h"
 
 using namespace std;
 
@@ -17,6 +17,9 @@ void renderSphere(const Vector3r &x, const float color[]);
 void releaseSphereBuffers();
 
 const Real particleRadius = static_cast<Real>(0.025);
+// IMPORTANT
+std::vector<Vector3r> particlePos;
+void loadPlyParticles();
 
 bool doPause = true;
 Vector3r oldMousePos;
@@ -60,9 +63,28 @@ int main( int argc, char **argv )
 	if (context_major_version >= 3)
 		createSphereBuffers((Real)particleRadius, 8);
 
+	loadPlyParticles();
+
 	MiniGL::mainLoop();	
 
 	return 0;
+}
+
+void loadPlyParticles()
+{
+	// Construct a data object by reading from file
+	auto filename = "C:/Dev/miniGL/data/models/bunny_particles.ply";
+	happly::PLYData plyIn(filename);
+	std::vector<std::array<double, 3>> vPos = plyIn.getVertexPositions();
+	printf("Reading ply file: %s\n", filename);
+	printf("Number of vertices: %d\n", int(vPos.size()));
+	// copy data to particlePos
+	particlePos.resize(vPos.size());
+	for (int i = 0; i < vPos.size(); i++)
+	{
+		particlePos[i] = Vector3r(vPos[i][0], vPos[i][1], vPos[i][2]);
+	}
+	printf("End Reading ply file\n");
 }
 
 
@@ -138,12 +160,9 @@ void timeStep ()
 }
 
 
-void render ()
+void render()
 {
 	// Draw simulation model
-	std::vector<Vector3r> particlePos = {{0,0,0},{0,0,1},{0,1,0},{1,0,0}};
-	const unsigned int nParticles = particlePos.size();
-
 	float surfaceColor[4] = { 0.2f, 0.6f, 0.8f, 1 };
 	float speccolor[4] = { 1.0, 1.0, 1.0, 1.0 };
 	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, surfaceColor);
@@ -154,7 +173,7 @@ void render ()
 
 	glPointSize(4.0);
 
-	for (unsigned int i = 0; i < nParticles; i++)
+	for (unsigned int i = 0; i < particlePos.size(); i++)
 	{
 		float fluidColor[4] = { 0.2f, 0.2f, 0.2f, 1.0 };
 		MiniGL::hsvToRgb(0.55f, 1.0f, 0.5f + 0.0, fluidColor);
@@ -166,10 +185,6 @@ void render ()
 	MiniGL::drawGrid_xz(gridColor);
 	
 	MiniGL::coordinateSystem();
-
-
-	// ImGui::ShowDemoWindow();
-
 }
 
 

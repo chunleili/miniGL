@@ -1,11 +1,13 @@
 #include <Eigen/Dense>
 #include <iostream>
+#include <filesystem>
 
 #include "Common/Common.h"
 #include "Visualization/MiniGL.h"
 #include "happly/happly.h"
 
 using namespace std;
+namespace fs = std::filesystem;
 
 void timeStep ();
 void render ();
@@ -16,10 +18,13 @@ void createSphereBuffers(Real radius, int resolution);
 void renderSphere(const Vector3r &x, const float color[]);
 void releaseSphereBuffers();
 
+// IMPORTANT Particles Data
 const Real particleRadius = static_cast<Real>(0.025);
-// IMPORTANT
 std::vector<Vector3r> particlePos;
-void loadPlyParticles();
+
+fs::path projectSourceDir;
+fs::path exeDir;
+fs::path modelDir;
 
 bool doPause = true;
 Vector3r oldMousePos;
@@ -41,7 +46,8 @@ void shaderBegin(const float *col);
 void shaderEnd();
 void shaderFlatBegin(const float* col);
 void shaderFlatEnd();
-
+void processFilePath();
+void loadPlyParticles();
 
 // main 
 int main( int argc, char **argv )
@@ -63,6 +69,7 @@ int main( int argc, char **argv )
 	if (context_major_version >= 3)
 		createSphereBuffers((Real)particleRadius, 8);
 
+	processFilePath();
 	loadPlyParticles();
 
 	MiniGL::mainLoop();	
@@ -70,13 +77,37 @@ int main( int argc, char **argv )
 	return 0;
 }
 
+void processFilePath()
+{
+	// get current directory as exeDir
+    fs::path currentDir = fs::current_path();
+	exeDir = currentDir.string();
+
+	// get parent directory as projectSourceDir
+	currentDir = currentDir.parent_path();
+    projectSourceDir = currentDir.string();
+
+	// get models directory as modelsDir
+	currentDir /= "data";
+	currentDir /= "models";
+	modelDir = currentDir.string();
+
+    std::cout << "exeDir: " << exeDir << std::endl;
+    std::cout << "projectSourceDir: " << projectSourceDir << std::endl;
+    std::cout << "modelsDir: " << modelDir << std::endl;
+}
+
+
 void loadPlyParticles()
 {
 	// Construct a data object by reading from file
-	auto filename = "C:/Dev/miniGL/data/models/bunny_particles.ply";
-	happly::PLYData plyIn(filename);
+    std::string fileName = "bunny_particles.ply";
+    fs::path filePath = modelDir / fileName;
+	auto fullPathString = filePath.string();
+
+	happly::PLYData plyIn(fullPathString);
 	std::vector<std::array<double, 3>> vPos = plyIn.getVertexPositions();
-	printf("Reading ply file: %s\n", filename);
+	printf("Reading ply file: %s\n", fullPathString.c_str());
 	printf("Number of vertices: %d\n", int(vPos.size()));
 	// copy data to particlePos
 	particlePos.resize(vPos.size());

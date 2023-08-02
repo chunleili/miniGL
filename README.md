@@ -7,7 +7,7 @@
 
 在windows平台下VS2022中可正常运行。编译系统基于CMake。
 
-![image](img/demo.png)
+![image](img/demo.gif)
 
 
 

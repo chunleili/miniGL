@@ -40,7 +40,9 @@ include_directories(${PROJECT_SOURCE_DIR}/extern)
 # -------------------------------------------------------------------------- #
 #                           set external libraries                           #
 # -------------------------------------------------------------------------- #
-
+# glu
+find_package(GLU REQUIRED)
+target_link_libraries(main OpenGL::GLU)
 # eigen
 include_directories( ${PROJECT_SOURCE_DIR}/extern/eigen )
 # opengl
